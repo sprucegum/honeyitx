@@ -77,26 +77,31 @@ module case_reinforcement() {
 }
 
 module case_front() {
+  case_length = (FAN_Y) + THICCNESS;
   color([1,0.80,0])  difference () {
-    translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, (FAN_Y) + THICCNESS, MOBO_Z + 2*THICCNESS]);
+    translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, case_length, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
+  translate ([-THICCNESS,-THICCNESS,-THICCNESS])  mobo_rail(case_length);
+  translate ([-3*THICCNESS + MOBO_X,-THICCNESS,-THICCNESS])  mobo_rail(case_length);
 };
 translate ([0,-50,0]) 
 case_front();
 
 module case_back() {
   // translate ([-MOBO_X ,-MOBO_Y,0]) case_front();
+  case_length = (MOBO_Y - FAN_Y) + 2*THICCNESS;
   color([1,0.80,0])  difference () {
     translate ([-THICCNESS,-7*THICCNESS+MOBO_Y/2,-THICCNESS]) // WHY -7*THICCNESS?!
-      cube([MOBO_X + 2*THICCNESS, (MOBO_Y - FAN_Y) + 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
+      cube([MOBO_X + 2*THICCNESS, case_length, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
-  translate ([-THICCNESS,-7*THICCNESS+MOBO_Y/2,-THICCNESS]) mobo_rail(5);
+  translate ([-THICCNESS,-7*THICCNESS+MOBO_Y/2,-THICCNESS]) mobo_rail(case_length);
+  translate ([-3*THICCNESS + MOBO_X,-7*THICCNESS+MOBO_Y/2,-THICCNESS]) mobo_rail(case_length);
 }
 
 module mobo_rail(length) {
-  translate ([THICCNESS,0,THICCNESS]) cube([4,length, MOBO_UNDERCLEARANCE]);
+  color([1,0.7,0]) translate ([THICCNESS,0,THICCNESS]) cube([4,length, MOBO_UNDERCLEARANCE]);
 }
 //translate ([0,50,0]) 
 case_back();
