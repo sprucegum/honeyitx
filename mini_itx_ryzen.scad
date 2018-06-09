@@ -20,21 +20,25 @@ module cpu_fan() {
 }
 
 
-VENT_SIZE = 30;
-VENT_WIDTH = 3;
+VENT_SIZE = 8;
+VENT_WIDTH = 8;
+VENT_SPACING = 2;
+VENT_OFFSET = (VENT_WIDTH + VENT_SPACING)/2;
 module vents() {
-  for (vx = [-30:VENT_SIZE+2:110]) {
+  for (vx = [-30:VENT_SIZE+VENT_SPACING:110]) {
     for (vy = [-2:VENT_WIDTH+2.5:165]) {
-      translate ([vx, vy, 0]) vent();
+      offset = VENT_OFFSET * (vx % 2);
+      translate ([vx + offset, vy, 0]) vent();
     }
   }
 }
 module vent() {
+  $fn = 6;
    scale ([1,VENT_WIDTH/VENT_SIZE,1]) color ([0.7, 0.2, 0.5]) translate ([50,50,-50]) cylinder(h=2.5*MOBO_Z, r=VENT_SIZE/2);
 }
 
 module case_front() {
-  color([0.2,0.75,0.2])  difference () {
+  color([1,0.80,0])  difference () {
     translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, MOBO_Y/2 + THICCNESS, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
@@ -43,7 +47,7 @@ translate ([0,-50,0]) case_front();
 
 module case_back() {
   // translate ([-MOBO_X ,-MOBO_Y,0]) case_front();
-  color([0.2,0.75,0.2])  difference () {
+  color([1,0.80,0])  difference () {
     translate ([-THICCNESS,-THICCNESS+MOBO_Y/2,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, MOBO_Y/2 + 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
