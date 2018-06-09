@@ -1,6 +1,7 @@
-MOBO_X = 170;
-MOBO_Y = 170;
+MOBO_X = 171;
+MOBO_Y = 171;
 MOBO_Z = 45; // approx mobo clearance, 45mm
+MOBO_UNDERCLEARANCE = 3; // I SWEAR IT CAN'T BE MORE THAN 5mm.
 THICCNESS = 2;
 // Modify this shit when you figure out where the CPU sits on the motherboard
 FAN_X = 84; // 71 from closest side
@@ -11,23 +12,31 @@ FAN_RADIUS = 104.5/2;
 module motherboard (show_vents=1) {
   color([0.75,0.2,0.2]) cube([MOBO_X, MOBO_Y, MOBO_Z]);
   cpu_fan();
+  rear_panel();
   if (show_vents) {
     difference() {
       union () {
         top_vents(); 
         side_vents();
       }
-      cpu_fan_reinforcement();
+      union () {
+        cpu_fan_reinforcement();
+        case_reinforcement();
+      }
     }
   };
 }
 translate ([-1.5*MOBO_X,0,0]) motherboard(show_vents=0); 
 
+module rear_panel() {
+  translate([2,-5,2]) cube([159,10,40]);
+}
+
 module cpu_fan() {
   translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS); // cooler
 }
 module cpu_fan_reinforcement() {
-  translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS + 4); // cooler
+  translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS + 1.5*THICCNESS); // cooler
 }
 
 
@@ -63,19 +72,31 @@ module side_vents() {
   }
 }
 
+module case_reinforcement() {
+  translate ([-THICCNESS,-1*THICCNESS + FAN_Y,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
+}
+
 module case_front() {
   color([1,0.80,0])  difference () {
     translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, (FAN_Y) + THICCNESS, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
 };
-translate ([0,-50,0]) case_front();
+translate ([0,-50,0]) 
+case_front();
 
 module case_back() {
   // translate ([-MOBO_X ,-MOBO_Y,0]) case_front();
   color([1,0.80,0])  difference () {
-    translate ([-THICCNESS,-THICCNESS+MOBO_Y/2,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, (MOBO_Y - FAN_Y) + 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
+    translate ([-THICCNESS,-7*THICCNESS+MOBO_Y/2,-THICCNESS]) // WHY -7*THICCNESS?!
+      cube([MOBO_X + 2*THICCNESS, (MOBO_Y - FAN_Y) + 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
+  translate ([-THICCNESS,-7*THICCNESS+MOBO_Y/2,-THICCNESS]) mobo_rail(5);
 }
-translate ([0,50,0]) case_back();
+
+module mobo_rail(length) {
+  translate ([THICCNESS,0,THICCNESS]) cube([4,length, MOBO_UNDERCLEARANCE]);
+}
+//translate ([0,50,0]) 
+case_back();
