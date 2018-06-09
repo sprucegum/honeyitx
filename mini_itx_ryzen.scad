@@ -65,7 +65,7 @@ module side_vents() {
 
 module case_front() {
   color([1,0.80,0])  difference () {
-    translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, MOBO_Y/2 + THICCNESS, MOBO_Z + 2*THICCNESS]);
+    translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, (FAN_Y) + THICCNESS, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
 };
@@ -74,7 +74,7 @@ translate ([0,-50,0]) case_front();
 module case_back() {
   // translate ([-MOBO_X ,-MOBO_Y,0]) case_front();
   color([1,0.80,0])  difference () {
-    translate ([-THICCNESS,-THICCNESS+MOBO_Y/2,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, MOBO_Y/2 + 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
+    translate ([-THICCNESS,-THICCNESS+MOBO_Y/2,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, (MOBO_Y - FAN_Y) + 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
     motherboard();
   }
 }
