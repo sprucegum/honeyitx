@@ -11,14 +11,17 @@ FAN_RADIUS = 104.5/2;
 SHROUD_NOTCH_RADIUS = FAN_RADIUS+6; // that dang AMD braded protrusion
 SHROUD_NOTCH_ARC_LENGTH = 29;
 
+POWER_BUTTON_DIAMETER = 6;
+
 module motherboard (show_vents=1) {
   color([0.75,0.2,0.2]) cube([MOBO_X, MOBO_Y, MOBO_Z]);
   cpu_fan();
-  rear_panel();
+  component_panel();
+  power_panel();
   if (show_vents) {
     difference() {
       union () {
-        top_vents(12,12); 
+        top_vents(12,12);
         side_vents(2,12);
       }
       union () {
@@ -30,9 +33,14 @@ module motherboard (show_vents=1) {
 }
 translate ([-1.5*MOBO_X,0,0]) motherboard(show_vents=0); 
 
-module rear_panel() {
+module component_panel() {
   translate([2,-5,2]) cube([159,10,40]);
 }
+
+module power_panel() {
+  translate([THICCNESS*2,MOBO_Y - 2*THICCNESS,THICCNESS]) cube([MOBO_X - 4*THICCNESS,10,40]);
+}
+
 
 module cpu_fan() {
   translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS); // cooler
