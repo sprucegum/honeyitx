@@ -15,8 +15,8 @@ SHROUD_NOTCH_ARC_LENGTH = 29;
 POWER_BUTTON_DIAMETER = 6;
 
 /* Assembly */
-//translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0); 
-//translate ([0,-50,0]) case_front();
+translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
+translate ([0,-50,0]) case_front();
 case_back();
 
 /* Definitions */
