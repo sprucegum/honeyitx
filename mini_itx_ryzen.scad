@@ -5,14 +5,21 @@ MOBO_UNDERCLEARANCE = 5; // I SWEAR IT CAN'T BE MORE THAN 5mm.
 THICCNESS = 2;
 // Modify this shit when you figure out where the CPU sits on the motherboard
 FAN_X = 71; // 71 from closest side
-FAN_Y = 91; // 91 mm from back
+FAN_Y = 81.5; // 81.5 mm from back
 FAN_Z = MOBO_Z + 50;
+echo(FAN_Y);
 FAN_RADIUS = 104.5/2;
 SHROUD_NOTCH_RADIUS = FAN_RADIUS+6; // that dang AMD braded protrusion
 SHROUD_NOTCH_ARC_LENGTH = 29;
 
 POWER_BUTTON_DIAMETER = 6;
 
+/* Assembly */
+//translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0); 
+//translate ([0,-50,0]) case_front();
+case_back();
+
+/* Definitions */
 module motherboard (show_vents=1) {
   color([0.75,0.2,0.2]) cube([MOBO_X, MOBO_Y, MOBO_Z]);
   cpu_fan();
@@ -31,7 +38,7 @@ module motherboard (show_vents=1) {
     }
   };
 }
-translate ([-1.5*MOBO_X,0,0]) motherboard(show_vents=0); 
+
 
 module component_panel() {
   translate([2,-5,2]) cube([159,10,40]);
@@ -107,7 +114,7 @@ module case_front() { // this has the front panel
   translate ([-THICCNESS,-THICCNESS,-THICCNESS])  mobo_rail(case_length);
   translate ([-3*THICCNESS + MOBO_X,-THICCNESS,-THICCNESS])  mobo_rail(case_length);
 };
-translate ([0,-50,0]) case_front();
+
 
 module case_back() {
   // translate ([-MOBO_X ,-MOBO_Y,0]) case_front();
@@ -124,4 +131,3 @@ module case_back() {
 module mobo_rail(length) {
   color([1,0.7,0]) translate ([THICCNESS,0,THICCNESS]) cube([4,length, MOBO_UNDERCLEARANCE]);
 }
-case_back();
