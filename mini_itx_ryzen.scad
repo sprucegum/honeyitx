@@ -5,12 +5,18 @@ MOBO_UNDERCLEARANCE = 5; // I SWEAR IT CAN'T BE MORE THAN 5mm.
 THICCNESS = 2;
 // Modify this shit when you figure out where the CPU sits on the motherboard
 FAN_X = 71; // 71 from closest side
-FAN_Y = 81.5; // 81.5 mm from back
+//FAN_Y = 81.5; // 81.5 mm from back
 FAN_Z = MOBO_Z + 50;
 echo(FAN_Y);
 FAN_RADIUS = 104.5/2;
 SHROUD_NOTCH_RADIUS = FAN_RADIUS+6; // that dang AMD braded protrusion
 SHROUD_NOTCH_ARC_LENGTH = 29;
+
+VENT_SIZE = 12;
+VENT_WIDTH = 12;
+VENT_SPACING = 1/2;
+VENT_OFFSET = (VENT_WIDTH + VENT_SPACING)/2;
+VENT_SHAPE = 6; // 6 = hexagon sides
 
 POWER_BUTTON_DIAMETER = 6;
 
@@ -18,6 +24,7 @@ POWER_BUTTON_DIAMETER = 6;
 translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
+translate ([-80,0,100]) power_button();
 
 /* Definitions */
 module motherboard (show_vents=1) {
@@ -37,6 +44,16 @@ module motherboard (show_vents=1) {
       }
     }
   };
+}
+
+module power_button() {
+  difference() {
+    union () {
+      vent(2*THICCNESS);
+      translate([0,0,THICCNESS]) vent(THICCNESS, THICCNESS);
+    }
+    cylinder(h=2*THICCNESS, r=POWER_BUTTON_DIAMETER/2);
+  }
 }
 
 
@@ -64,11 +81,6 @@ module cpu_fan_reinforcement() {
   }
 }
 
-
-VENT_SIZE = 12;
-VENT_WIDTH = 12;
-VENT_SPACING = 1/2;
-VENT_OFFSET = (VENT_WIDTH + VENT_SPACING)/2;
 module top_vents(rows, columns) {
   translate([-38,-35,0]) {
     vxc = VENT_SIZE+VENT_SPACING; // vx constant
@@ -82,8 +94,11 @@ module top_vents(rows, columns) {
   }
 }
 module top_vent(height = 2.5*MOBO_Z) {
-  $fn = 6;
-   scale ([1,VENT_WIDTH/VENT_SIZE,1]) color ([0.7, 0.2, 0.5]) translate ([50,50,-50]) cylinder(h=height, r=VENT_SIZE/2);
+   color ([0.7, 0.2, 0.5]) translate ([50,50,-50]) vent(height);
+}
+module vent(height, radius_offset = 0) {
+  $fn = VENT_SHAPE;
+  cylinder(h=height, r=VENT_SIZE/2 + radius_offset);
 }
 
 module side_vents(rows, columns) {
@@ -105,7 +120,7 @@ module case_reinforcement() {
   translate ([-THICCNESS,-1*THICCNESS + FAN_Y,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, 2*THICCNESS, MOBO_Z + 2*THICCNESS]);
 }
 
-module case_front() { // this has the front panel
+module case_front() { // this is where all the plugs are
   case_length = (FAN_Y ) + THICCNESS;
   color([1,0.80,0])  difference () {
     translate ([-THICCNESS,-THICCNESS,-THICCNESS]) cube([MOBO_X + 2*THICCNESS, case_length, MOBO_Z + 2*THICCNESS]);
