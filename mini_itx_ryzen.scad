@@ -6,7 +6,7 @@ THICCNESS = 2;
 // Modify this shit when you figure out where the CPU sits on the motherboard
 FAN_X = 71; // 71 from closest side
 FAN_Y = 81.5; // 81.5 mm from back
-FAN_Z = MOBO_Z + 50;
+FAN_Z = MOBO_Z + 17.5;
 echo(FAN_Y);
 FAN_RADIUS = 104.5/2;
 SHROUD_NOTCH_RADIUS = FAN_RADIUS+6; // that dang AMD braded protrusion
@@ -25,6 +25,7 @@ translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
 translate ([185,0,50]) rotate([0,180,0])  power_button();
+translate([-250, -200, 0]) cpu_fan_grill();
 
 /* Definitions */
 module motherboard (show_vents=1) {
@@ -47,7 +48,7 @@ module motherboard (show_vents=1) {
 }
 
 module power_button() {
-  difference() {
+    color([0.8,0.2,0]) difference() {
     scale([0.95,1,1]) union () {
       vent(2*THICCNESS);
       translate([0,0,THICCNESS]) vent(THICCNESS, THICCNESS);
@@ -65,14 +66,53 @@ module power_panel() {
   translate([THICCNESS*2,MOBO_Y - 2*THICCNESS,THICCNESS]) cube([MOBO_X - 4*THICCNESS,10,40]);
 }
 
-
+FAN_CLIP_INNER_DISTANCE = 40;
+FAN_CLIP_OUTER_DISTANCE = 70;
 module cpu_fan() {
-  translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS); // cooler
-  intersection () {
-    translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=SHROUD_NOTCH_RADIUS); // cooler shroud thing
-    translate([FAN_X - SHROUD_NOTCH_ARC_LENGTH/2,10,0]) cube([SHROUD_NOTCH_ARC_LENGTH,40,100]);
+  difference () {
+    union () {
+      translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS); // cooler
+      intersection () {
+        translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=SHROUD_NOTCH_RADIUS); // cooler shroud thing
+        translate([FAN_X - SHROUD_NOTCH_ARC_LENGTH/2,10,0]) cube([SHROUD_NOTCH_ARC_LENGTH,40,100]);
+      }
+    }
+    difference() { // The clip/grill mounting holes
+      union () {
+        translate([0,(FAN_Y-FAN_CLIP_INNER_DISTANCE/2) - 5,MOBO_Z]) cube([FAN_RADIUS*2 + 50,10,8]);
+        translate([0,(FAN_Y+FAN_CLIP_INNER_DISTANCE/2) - 5,MOBO_Z]) cube([FAN_RADIUS*2 + 50,10,8]);
+      }
+      translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS - 1.2);
+    }
   }
+
 }
+
+GRILL_HEIGHT = 12;
+module cpu_fan_grill() {
+  difference () {
+    translate ([0,0,FAN_Z - GRILL_HEIGHT]) union () {
+      difference() {
+        translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + THICCNESS, r=FAN_RADIUS + THICCNESS); // cooler
+        difference () {
+          translate ([0,15,50]) top_vents(9, 9);
+          difference () {
+            translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + THICCNESS, r=FAN_RADIUS + THICCNESS); // cooler
+            translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + THICCNESS, r=FAN_RADIUS); // cooler
+          }
+        }
+      }
+      intersection () {
+        translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT, r=SHROUD_NOTCH_RADIUS+THICCNESS); // cooler shroud thing
+        translate([FAN_X - SHROUD_NOTCH_ARC_LENGTH/2 - THICCNESS,10,0]) cube([SHROUD_NOTCH_ARC_LENGTH+THICCNESS*2,40,100]);
+      }
+    }
+    cpu_fan();
+  }
+
+}
+
+
 module cpu_fan_reinforcement() {
   translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS + 1.5*THICCNESS); // cooler
   intersection () {
