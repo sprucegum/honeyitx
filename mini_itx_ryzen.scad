@@ -5,7 +5,7 @@ MOBO_UNDERCLEARANCE = 5; // I SWEAR IT CAN'T BE MORE THAN 5mm.
 THICCNESS = 2;
 // Modify this shit when you figure out where the CPU sits on the motherboard
 FAN_X = 71; // 71 from closest side
-//FAN_Y = 81.5; // 81.5 mm from back
+FAN_Y = 81.5; // 81.5 mm from back
 FAN_Z = MOBO_Z + 50;
 echo(FAN_Y);
 FAN_RADIUS = 104.5/2;
@@ -18,13 +18,13 @@ VENT_SPACING = 1/2;
 VENT_OFFSET = (VENT_WIDTH + VENT_SPACING)/2;
 VENT_SHAPE = 6; // 6 = hexagon sides
 
-POWER_BUTTON_DIAMETER = 6;
+POWER_BUTTON_DIAMETER = 7;
 
 /* Assembly */
 translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
-translate ([-80,0,100]) power_button();
+translate ([185,0,50]) rotate([0,180,0])  power_button();
 
 /* Definitions */
 module motherboard (show_vents=1) {
@@ -48,7 +48,7 @@ module motherboard (show_vents=1) {
 
 module power_button() {
   difference() {
-    union () {
+    scale([0.95,1,1]) union () {
       vent(2*THICCNESS);
       translate([0,0,THICCNESS]) vent(THICCNESS, THICCNESS);
     }
