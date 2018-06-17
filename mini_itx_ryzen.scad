@@ -79,8 +79,8 @@ module cpu_fan() {
     }
     difference() { // The clip/grill mounting holes
       union () {
-        translate([0,(FAN_Y-FAN_CLIP_INNER_DISTANCE/2) - 5,MOBO_Z]) cube([FAN_RADIUS*2 + 50,10,8]);
-        translate([0,(FAN_Y+FAN_CLIP_INNER_DISTANCE/2) - 5,MOBO_Z]) cube([FAN_RADIUS*2 + 50,10,8]);
+        translate([0,(FAN_Y-FAN_CLIP_INNER_DISTANCE/2) - 8,MOBO_Z + 5]) cube([FAN_RADIUS*2 + 50,10,3]);
+        translate([0,(FAN_Y+FAN_CLIP_INNER_DISTANCE/2) - 2,MOBO_Z + 5]) cube([FAN_RADIUS*2 + 50,10,3]);
       }
       translate([FAN_X, FAN_Y,0]) cylinder(h=FAN_Z, r=FAN_RADIUS - 1.2);
     }
@@ -88,23 +88,28 @@ module cpu_fan() {
 
 }
 
-GRILL_HEIGHT = 12;
+GRILL_HEIGHT = 15;
 module cpu_fan_grill() {
+  $fa = 1;
+  GRILL_THICCNESS = THICCNESS/2;
+  color([1,0.80,0])
   difference () {
     translate ([0,0,FAN_Z - GRILL_HEIGHT]) union () {
       difference() {
-        translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + THICCNESS, r=FAN_RADIUS + THICCNESS); // cooler
+        translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + GRILL_THICCNESS, r=FAN_RADIUS + GRILL_THICCNESS); // cooler
         difference () {
-          translate ([0,15,50]) top_vents(9, 9);
+          difference() {
+            translate ([5,15,60]) top_vents(10, 9, -0.4);
+          }
           difference () {
-            translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + THICCNESS, r=FAN_RADIUS + THICCNESS); // cooler
-            translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + THICCNESS, r=FAN_RADIUS); // cooler
+            translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + GRILL_THICCNESS, r=FAN_RADIUS + GRILL_THICCNESS); // cooler
+            translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT + GRILL_THICCNESS, r=FAN_RADIUS); // cooler
           }
         }
       }
       intersection () {
-        translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT, r=SHROUD_NOTCH_RADIUS+THICCNESS); // cooler shroud thing
-        translate([FAN_X - SHROUD_NOTCH_ARC_LENGTH/2 - THICCNESS,10,0]) cube([SHROUD_NOTCH_ARC_LENGTH+THICCNESS*2,40,100]);
+        translate([FAN_X, FAN_Y,0]) cylinder(h=GRILL_HEIGHT, r=SHROUD_NOTCH_RADIUS+GRILL_THICCNESS); // cooler shroud thing
+        translate([FAN_X - SHROUD_NOTCH_ARC_LENGTH/2 - GRILL_THICCNESS,10,0]) cube([SHROUD_NOTCH_ARC_LENGTH+GRILL_THICCNESS*2,40,100]);
       }
     }
     cpu_fan();
@@ -121,10 +126,10 @@ module cpu_fan_reinforcement() {
   }
 }
 
-module top_vents(rows, columns) {
+module top_vents(rows, columns, spacing = VENT_SPACING) {
   translate([-38,-35,0]) {
-    vxc = VENT_SIZE+VENT_SPACING; // vx constant
-    vyc = VENT_WIDTH+VENT_SPACING;
+    vxc = VENT_SIZE+spacing; // vx constant
+    vyc = VENT_WIDTH+spacing;
     for (vx = [0:vxc:vxc*rows]) {
       for (vy = [0:vyc:vyc*columns]) {
         offset = VENT_OFFSET * ((vx/vxc) % 2);
