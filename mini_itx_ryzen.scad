@@ -20,12 +20,15 @@ VENT_SHAPE = 6; // 6 = hexagon sides
 
 POWER_BUTTON_DIAMETER = 7;
 
+use <panel.scad>;
+use <panel_components.scad>;
 /* Assembly */
 translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
 translate ([185,0,50]) rotate([0,180,0])  power_button();
-translate([-250, -200, 0]) cpu_fan_grill();
+//translate([-250, -200, 0]) cpu_fan_grill();
+
 
 /* Definitions */
 module motherboard (show_vents=1) {
@@ -57,9 +60,13 @@ module power_button() {
   }
 }
 
-
+CUTOUT_ADJUST_X = 15;
 module component_panel() {
-  translate([2,-5,2]) cube([159,10,40]);
+  //translate([2,0,2]) cube([159,10,40]);
+  translate ([0,3,0]) {
+    translate([CUTOUT_ADJUST_X, -5,9]) panel();
+    translate([CUTOUT_ADJUST_X, -9.5,9]) panel_components();
+  }
 }
 
 module power_panel() {
