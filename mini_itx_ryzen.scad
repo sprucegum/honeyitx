@@ -23,12 +23,12 @@ POWER_BUTTON_DIAMETER = 7;
 use <panel.scad>;
 use <panel_components.scad>;
 /* Assembly */
-translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
-translate ([0,-50,0]) case_front();
-case_back();
-translate ([185,0,50]) rotate([0,180,0])  power_button();
-translate([-250, -200, 0]) cpu_fan_grill();
-
+//translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
+//translate ([0,-50,0]) case_front();
+//case_back();
+//translate ([185,0,50]) rotate([0,180,0])  power_button();
+//translate([-250, -200, 0]) cpu_fan_grill();
+translate([0,-200,0]) component_test_panel();
 
 /* Definitions */
 module motherboard (show_vents=1) {
@@ -62,12 +62,19 @@ module power_button() {
 
 CUTOUT_ADJUST_X = 15;
 module component_panel() {
-  //translate([2,0,2]) cube([159,10,40]);
-  translate ([0,3,0]) {
+  translate ([-11,3,-2]) {
     translate([CUTOUT_ADJUST_X, -4,9]) panel();
     translate([CUTOUT_ADJUST_X, -9.5,9]) panel_components();
   }
 }
+
+module component_test_panel() {
+  difference () {
+    translate([2,-2,2]) cube([159,4,40]);
+    component_panel();
+  }
+}
+
 
 module power_panel() {
   translate([THICCNESS*2,MOBO_Y - 2*THICCNESS,THICCNESS]) cube([MOBO_X - 4*THICCNESS,10,40]);
