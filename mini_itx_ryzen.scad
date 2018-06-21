@@ -1,5 +1,5 @@
 MOBO_X = 171;
-MOBO_Y = 171;
+MOBO_Y = 174;
 MOBO_Z = 45; // approx mobo clearance, 45mm
 MOBO_UNDERCLEARANCE = 5; // I SWEAR IT CAN'T BE MORE THAN 5mm.
 THICCNESS = 2;
@@ -24,11 +24,11 @@ use <panel.scad>;
 use <panel_components.scad>;
 /* Assembly */
 //translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
-//translate ([0,-50,0]) case_front();
+translate ([0,-50,0]) case_front();
 //case_back();
 //translate ([185,0,50]) rotate([0,180,0])  power_button();
 //translate([-250, -200, 0]) cpu_fan_grill();
-translate([0,-200,0]) component_test_panel();
+//translate([0,-200,0]) component_test_panel();
 
 /* Definitions */
 module motherboard (show_vents=1) {
@@ -61,8 +61,10 @@ module power_button() {
 }
 
 CUTOUT_ADJUST_X = 15;
+COMPONENT_SCALE = 1.035;
+cs = [COMPONENT_SCALE, COMPONENT_SCALE, COMPONENT_SCALE];
 module component_panel() {
-  translate ([-11,3,-2]) {
+  scale(cs)  translate ([-11,3,-2]) {
     translate([CUTOUT_ADJUST_X, -4,9]) panel();
     translate([CUTOUT_ADJUST_X, -9.5,9]) panel_components();
   }
@@ -70,8 +72,8 @@ module component_panel() {
 
 module component_test_panel() {
   difference () {
-    translate([2,-2,2]) cube([159,4,40]);
-    component_panel();
+    translate([2,-2,2]) cube([159,2,40]);
+   component_panel();
   }
 }
 
