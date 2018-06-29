@@ -9,7 +9,7 @@ FAN_Y = 81.5; // 81.5 mm from back
 FAN_Z = MOBO_Z + 17.5;
 echo(FAN_Y);
 FAN_RADIUS = 104.5/2;
-SHROUD_NOTCH_RADIUS = FAN_RADIUS+6; // that dang AMD braded protrusion
+SHROUD_NOTCH_RADIUS = FAN_RADIUS+6; // that dang AMD branded protrusion
 SHROUD_NOTCH_ARC_LENGTH = 29;
 
 VENT_SIZE = 12;
@@ -24,14 +24,28 @@ use <panel.scad>;
 use <panel_components.scad>;
 use <jl.scad>;
 /* Assembly */
-//translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
+translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
-//translate ([185,0,50]) rotate([0,180,0])  power_button();
+translate ([185,0,50]) rotate([0,180,0])  power_button();
 translate([0, -25, 25]) cpu_fan_grill();
-//translate([0,-200,0]) component_test_panel();
+translate([0,-200,0]) component_test_panel();
+translate ([-1.5*MOBO_X,0,0]) power_supply();
 
 /* Definitions */
+
+PSU_Z = 35;
+PSU_X = 154;
+PSU_Y = 40; // board with the wires connected
+PBOX_Y = PSU_Y + 2*THICCNESS;
+PBOX_X = MOBO_X;
+PBOX_Z = MOBO_Z;
+PSU_BOARD_Z = 1.3;
+
+module power_supply() {
+  translate([0, MOBO_Y,0]) cube([PSU_X, PSU_Y, PSU_Z]);
+}
+
 module motherboard (show_vents=1) {
   color([0.75,0.2,0.2]) cube([MOBO_X, MOBO_Y, MOBO_Z]);
   cpu_fan();
