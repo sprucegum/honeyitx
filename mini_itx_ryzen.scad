@@ -24,11 +24,11 @@ use <panel.scad>;
 use <panel_components.scad>;
 use <jl.scad>;
 /* Assembly */
-translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
+//translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
-translate ([185,0,50]) rotate([0,180,0])  power_button();
-translate([-250, -200, 0]) cpu_fan_grill();
+//translate ([185,0,50]) rotate([0,180,0])  power_button();
+translate([0, -25, 25]) cpu_fan_grill();
 //translate([0,-200,0]) component_test_panel();
 
 /* Definitions */
