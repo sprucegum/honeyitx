@@ -29,8 +29,9 @@ translate ([0,-50,0]) case_front();
 case_back();
 translate ([185,0,50]) rotate([0,180,0])  power_button();
 translate([0, -25, 25]) cpu_fan_grill();
-translate([0,-200,0]) component_test_panel();
-translate ([-1.5*MOBO_X,0,0]) power_supply();
+translate ([-1.5*MOBO_X,0,0])  case_power_expansion();
+translate ([0,30,0])  case_power_expansion();
+//translate([0,-200,0]) component_test_panel();
 
 /* Definitions */
 
@@ -42,14 +43,12 @@ PBOX_X = MOBO_X;
 PBOX_Z = MOBO_Z;
 PSU_BOARD_Z = 1.3;
 
-module power_supply() {
-  translate([0, MOBO_Y,0]) cube([PSU_X, PSU_Y, PSU_Z]);
-}
+
 
 module motherboard (show_vents=1) {
   color([0.75,0.2,0.2]) cube([MOBO_X, MOBO_Y, MOBO_Z]);
   cpu_fan();
-  component_panel();
+  //component_panel();
   power_panel();
   if (show_vents) {
     difference() {
@@ -92,9 +91,44 @@ module component_test_panel() {
   }
 }
 
+module case_power_expansion() {
+  difference () {
+    difference() {
+      union () {
+        // The power box
+        difference () {
+          translate([-THICCNESS, MOBO_Y + 2*THICCNESS, -THICCNESS]) cube([MOBO_X + 2*THICCNESS, PSU_Y, MOBO_Z + 2*THICCNESS]);
+          power_supply_void();
+        }
+        // The clip-tabs for the power box
+        translate([MOBO_X - 10 ,MOBO_Y - 2, 1]) cube([6,10,3]);
+        translate([10, MOBO_Y - 2, 1]) cube([6,10,3]);
+        translate([MOBO_X - 10, MOBO_Y - 2, MOBO_Z - (2*THICCNESS + 1)]) cube([6,10,3]);
+        translate([10, MOBO_Y - 2, MOBO_Z - (2*THICCNESS + 1)]) cube([6,10,3]);
+      }
+      // subtract the back of the case so the clip-tabs will click-in
+      union () {
+        case_back();
+      }
+    }
+    // vents and such
+    translate ([-THICCNESS, MOBO_Y + 2*THICCNESS, -THICCNESS]) union () {
+      top_vents(12,1);
+      side_vents(2,1);
+      translate([0,0,0]) rotate([90,0,0]) top_vents(12,2);
+    }
+  }
+}
+
+//power_supply_void();
+
+module power_supply_void() {
+  translate([THICCNESS, MOBO_Y, THICCNESS]) cube([MOBO_X - 2*THICCNESS, PSU_Y, MOBO_Z - 2*THICCNESS]);
+}
 
 module power_panel() {
-  translate([THICCNESS*2,MOBO_Y - 2*THICCNESS,THICCNESS]) cube([MOBO_X - 4*THICCNESS,10,40]);
+  translate([THICCNESS*2,MOBO_Y - 2*THICCNESS,THICCNESS]) 
+    cube([MOBO_X - 4*THICCNESS, 10, 40]);
 }
 
 FAN_CLIP_INNER_DISTANCE = 40;
