@@ -24,13 +24,15 @@ use <panel.scad>;
 use <panel_components.scad>;
 use <jl.scad>;
 /* Assembly */
+/*
 translate ([-1.5*MOBO_X,0,0]) motherboard( show_vents=0);
 translate ([0,-50,0]) case_front();
 case_back();
 translate ([185,0,50]) rotate([0,180,0])  power_button();
 translate([0, -25, 25]) cpu_fan_grill();
-translate ([-1.5*MOBO_X,0,0])  case_power_expansion();
-translate ([0,30,0])  case_power_expansion();
+*/
+//translate ([0,30,0])  case_power_expansion(); 
+translate ([0,0,0])  case_power_expansion(); 
 //translate([0,-200,0]) component_test_panel();
 
 /* Definitions */
@@ -101,10 +103,10 @@ module case_power_expansion() {
           power_supply_void();
         }
         // The clip-tabs for the power box
-        translate([MOBO_X - 10 ,MOBO_Y - 2, 1]) cube([6,10,3]);
-        translate([10, MOBO_Y - 2, 1]) cube([6,10,3]);
-        translate([MOBO_X - 10, MOBO_Y - 2, MOBO_Z - (2*THICCNESS + 1)]) cube([6,10,3]);
-        translate([10, MOBO_Y - 2, MOBO_Z - (2*THICCNESS + 1)]) cube([6,10,3]);
+        translate([MOBO_X - (20 + 2*THICCNESS), MOBO_Y - 2, 1]) cube([10,10,3]);
+        translate([20, MOBO_Y - 2, 1]) cube([10,10,3]);
+        translate([MOBO_X - (20 + 2*THICCNESS), MOBO_Y - 2, MOBO_Z - (2*THICCNESS + 1)]) cube([10,10,3]);
+        translate([20, MOBO_Y - 2, MOBO_Z - (2*THICCNESS + 1)]) cube([10,10,3]);
       }
       // subtract the back of the case so the clip-tabs will click-in
       union () {
@@ -115,10 +117,15 @@ module case_power_expansion() {
     translate ([-THICCNESS, MOBO_Y + 2*THICCNESS, -THICCNESS]) union () {
       top_vents(12,1);
       side_vents(2,1);
-      translate([0,0,0]) rotate([90,0,0]) top_vents(12,2);
+      difference () {
+        translate([0,0,0]) rotate([90,0,0]) top_vents(12,2);
+        translate([THICCNESS,2*THICCNESS - MOBO_Y, THICCNESS]) cube([MOBO_X, MOBO_Y, MOBO_Z]);
+      }
     }
   }
 }
+
+
 
 //power_supply_void();
 
