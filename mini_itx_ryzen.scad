@@ -99,7 +99,7 @@ module case_power_expansion() {
       union () {
         // The power box
         difference () {
-          translate([-THICCNESS, MOBO_Y + 2*THICCNESS, -THICCNESS]) cube([MOBO_X + 2*THICCNESS, PSU_Y, MOBO_Z + 2*THICCNESS]);
+          translate([0, MOBO_Y + THICCNESS, 0]) cube([MOBO_X, PSU_Y, MOBO_Z]);
           power_supply_void();
         }
         // The clip-tabs for the power box
@@ -111,6 +111,7 @@ module case_power_expansion() {
       // subtract the back of the case so the clip-tabs will click-in
       union () {
         case_back();
+        translate([0,0.2,0]) case_back(); // the second copy of the case back gives us a little wiggle room
       }
     }
     // vents and such
@@ -130,7 +131,7 @@ module case_power_expansion() {
 //power_supply_void();
 
 module power_supply_void() {
-  translate([THICCNESS, MOBO_Y, THICCNESS]) cube([MOBO_X - 2*THICCNESS, PSU_Y, MOBO_Z - 2*THICCNESS]);
+  translate([THICCNESS, MOBO_Y , THICCNESS]) cube([MOBO_X - 2*THICCNESS, PSU_Y, MOBO_Z - 2*THICCNESS]);
 }
 
 module power_panel() {
