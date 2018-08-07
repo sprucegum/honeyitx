@@ -94,7 +94,7 @@ class Optimizer {
                     try {
                         Jimp.read(sourceFilePath).then(function (image) {
                             image.autocrop()
-                                 .scaleToFit(1200, Jimp.AUTO)
+                                 .scaleToFit(1000, Jimp.AUTO)
                                  .quality(85)                 // set JPEG quality
                                  .write(optimizedFilePath); // save
                         }).catch(function (err) {

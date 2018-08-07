@@ -14,7 +14,7 @@
 I built a very minimal PC using my 3D printer. I'm still a bit worried about damaging the fan/heatsink when I transport it, but I'm quite happy about the cooling, performance, and portability so far.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/v1.jpg}
-\emph{The first complete prototype}
+\caption{The first complete prototype}
 \end{figure}
 
 \section{Components}
@@ -32,7 +32,7 @@ My brother and I were talking about the possibilities of 3D printed computer cas
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/nearly_bare.jpg}
-\emph{Trying to visualize all the components together}
+\caption{Trying to visualize all the components together}
 \end{figure}
 
 I have a few reasons for building this system. I was running a dual-seat configuration before, but having two stations glued into one computer caused quite a few annoying problems. When I travel, I usually bring my laptop, but I find that my laptop doesn't have good enough game performance. Hell, my current laptop (A Dell Latitude E5450) can barely run everything I need it to run at work.
@@ -42,7 +42,7 @@ I wish I could have thrown 32GB of RAM in this machine. Unfortunately, even 16GB
 When I was browsing Newegg, Amazon, and other sites to see what Mini-ITX cases and power supplies were available. I found that most cases are designed to accomodate a discrete GPU, Optical Drive, and 2.5" or 3.5" SATA Drives. While I may want to add a 2.5" SSD into my build in the future, I don't currently have a need for any of these extra components. They say that to a kid with a hammer, every problem looks like a nail. Well, to a nerd with a 3D Printer, I try to print a solution to every one of my problems.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/concept.jpg}
-\emph{The initial concept}
+\caption{The initial concept}
 \end{figure}
 
 I figured I could make some kind of two piece clamshell case. I saw a really cool build\footnote{The inspiration for the case: \url{https://thingiverse.com/thing:1899854}} on Thingiverse and I felt inspired. I like the aesthetics of an exposed central fan. I've heard that most mini-pc's get really hot, so cooling was a major concern.
@@ -52,7 +52,7 @@ I like a lot of things about OpenSCAD. Since I spend a lot of time writing code,
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/conceptSCAD.jpg}
-\emph{A first attempt to describe the case in OpenSCAD}
+\caption{A first attempt to describe the case in OpenSCAD}
 \end{figure}
 At this point, I hadn't recieved the parts, so I actually didn't know the exact measurements, let alone shape of all of my components. I started by approximating the shape, size, and position of all of the components. I tried to write the OpenSCAD code in a generic way so that I could "dial-in" the design for any motherboard and fan combo.
  
@@ -62,18 +62,30 @@ I printed the case using my HICTOP 3DP-12. It's a Prusa i3 clone that I purchase
 I've had to make about 3 copies of every printed part in this design. I had to eyeball a few measurements and approximate some shapes. 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/oval_cooling.jpg}
-\emph{At first I thought maybe oval cooling slots would be effective}
+\caption{At first I thought maybe oval cooling slots would be effective}
 \end{figure}
 The honeycomb design was sort of an accident. I was experimenting with shapes and placement and actually considered rectangular slats at first. I had seen some honeycomb cases and structures on Thingiverse in the past, so I figured I'd give it a shot. It was easy to make the hexagonal columns by creating a 6 sided approximation to a cylinder.
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/honeycomb_cooling.jpg}
-\emph{I realized I could minimize material and optimize airflow by using a honeycomb pattern}
+\caption{I realized I could minimize material and optimize airflow by using a honeycomb pattern}
 \end{figure}
 The honeycomb pattern helped me minimize material usage while also allowing for great airflow. I had to print a handful of cases to get the fan placement and motherboard clearance just right.
 
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{pics/soldering.mp4}
+\caption{Soldering the power switch}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{pics/heatshrink.mp4}
+\caption{Heat shrink wrapping the power switch}
+\end{figure}
+
 \section{Assembly}
+The two halves are currently held together by 4 twist-ties. The ATX power adapter cage is held on by clips and hot glue.
 
 \section{Results}
+The machine is currently running Windows 10. The box can run and stream games at > 30fps at medium-high settings.
 
 \end{document}
