@@ -72,6 +72,31 @@ The honeycomb design was sort of an accident. I was experimenting with shapes an
 \end{figure}
 The honeycomb pattern helped me minimize material usage while also allowing for great airflow. I had to print a handful of cases to get the fan placement and motherboard clearance just right.
 
+\subsection{The panel}
+At this point, I was running a full size desktop power supply. Each side of the case was wide open. I needed to get the fit of all the panel components just right.
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{pics/1st_iteration.jpg}
+\caption{A simple two piece case}
+\end{figure}
+
+I lucked out and realized I could use the square panel slot to test fit the panel components without reprinting the entire half-shell.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{pics/panel_test_fit.jpg}
+\caption{Looks like I got the spacing and sizing right}
+\end{figure}
+
+It took a few test prints, but I finally found the right spacing for all the different connectors on the rear panel. I could definitely dial-in the settings even further, but I'm pretty happy for the moment.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{pics/panel_nice_fit.jpg}
+\caption{Fits like a glove}
+\end{figure}
+
+I'd actually like to improve the cooling on the panel. It's solid right now, and since I really want maximum airflow, I don't want to cut off one whole side of the case.
+
+\subsection{The Power Button}
+So at first I was just "hot-wiring" the power and reset buttons. I used a female to female connector to bridge either the power or reset circuit to ground. When I finally commited to building the full self-contained case, I needed to solder wires to the power switch and allow it to be mounted to the case. I cut a female-female connector in half, stripped the wire, and soldered it to the power switch which was inserted into the 3D-printed button-mount.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/soldering.mp4}
 \caption{Soldering the power switch}
@@ -82,10 +107,20 @@ The honeycomb pattern helped me minimize material usage while also allowing for 
 \caption{Heat shrink wrapping the power switch}
 \end{figure}
 
+Unfortunately, although I bought two switches, I didn't realize that one of the switches I bought was actually rather than NO\footnote{Normally Open and Normally Closed Switches: \url{https://learn.sparkfun.com/tutorials/switch-basics}}. I had to superglue the switch onto the case. I was able to insert it as a press-fit component, but it needed glue to stay in place when the button was depressed. 
+
 \section{Assembly}
 The two halves are currently held together by 4 twist-ties. The ATX power adapter cage is held on by clips and hot glue.
 
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{pics/assembled.jpg}
+\caption{The PSU and fan mask are attached. The power button is glued in and the machine has been christened.}
+\end{figure}
+
 \section{Results}
-The machine is currently running Windows 10. The box can run and stream games at > 30fps at medium-high settings.
+The machine is currently running Windows 10. The box can run and stream games at > 30fps at medium-high settings. I was running Arch Linux on it at first. I had to update to the latest BIOS and kernel to get it running, but it was very impressive. Since my main machine is a Linux workstation, I decided to risk purchasing a copy of Windows 10 Pro from Kinguin.net It was pretty cheap, but since it was an OEM license and I am not entirely familiar with the Windows install experience, it took me a few days to get the license properly validated. I haven't yet done formal benchmarks, but the first few weeks, I ran the DDR4 at the default 2133 Mhz. I brought the RAM up to 3200Mhz without looking at the rated speed and it just worked. I'm getting some crashes which might be due to the undersized PSU brick I'm currently using since it's only designed to supply 90W of power.
+
+%\section{Code}
+%\lstinputlisting[language=OpenSCAD]{../mini_itx_ryzen.scad}
 
 \end{document}

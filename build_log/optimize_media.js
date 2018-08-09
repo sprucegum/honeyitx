@@ -93,10 +93,13 @@ class Optimizer {
                     console.log('optimizing image', sourceFilePath);
                     try {
                         Jimp.read(sourceFilePath).then(function (image) {
-                            image.autocrop()
-                                 .scaleToFit(1000, Jimp.AUTO)
-                                 .quality(85)                 // set JPEG quality
-                                 .write(optimizedFilePath); // save
+ 			                let i = image.autocrop();
+                            let width = i.bitmap.width;
+		                    if (width > 1000) {
+                                i = i.scaleToFit(1000, Jimp.AUTO)
+                                .quality(85);                 // set JPEG quality
+                            }
+                            i.write(optimizedFilePath); // save
                         }).catch(function (err) {
                             console.error(err);
                         });
