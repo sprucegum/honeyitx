@@ -5,13 +5,17 @@
 \title{\textbf{"Killa B" Mini-ITX Build Log}}
 \author{}
 \date{\today}
-
+\tableofcontents
 \begin{document}
+
 
 \maketitle
 
 \section{Summary}
 I built a very minimal PC using my 3D printer. I'm still a bit worried about damaging the fan/heatsink when I transport it, but I'm quite happy about the cooling, performance, and portability so far.
+
+You can find the OpenSCAD and STL files for modifying and printing the case \href{https://thingiverse.com/thing:2966093}{here}
+
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{pics/v1.jpg}
 \caption{The first complete prototype}
@@ -120,7 +124,7 @@ The two halves are currently held together by 4 twist-ties. The ATX power adapte
 \section{Results}
 The machine is currently running Windows 10. The box can run and stream games at > 30fps at medium-high settings. I was running Arch Linux on it at first. I had to update to the latest BIOS and kernel to get it running, but it was very impressive. Since my main machine is a Linux workstation, I decided to risk purchasing a copy of Windows 10 Pro from Kinguin.net It was pretty cheap, but since it was an OEM license and I am not entirely familiar with the Windows install experience, it took me a few days to get the license properly validated. I haven't yet done formal benchmarks, but the first few weeks, I ran the DDR4 at the default 2133 Mhz. I brought the RAM up to 3200Mhz without looking at the rated speed and it just worked. I'm getting some crashes which might be due to the undersized PSU brick I'm currently using since it's only designed to supply 90W of power.
 
-%\section{Code}
-%\lstinputlisting[language=OpenSCAD]{../mini_itx_ryzen.scad}
+\section{Code}
+\lstinputlisting[language=Octave]{../mini_itx_ryzen.scad}
 
 \end{document}
