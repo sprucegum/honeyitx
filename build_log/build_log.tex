@@ -111,7 +111,7 @@ So at first I was just "hot-wiring" the power and reset buttons. I used a female
 \caption{Heat shrink wrapping the power switch}
 \end{figure}
 
-Unfortunately, although I bought two switches, I didn't realize that one of the switches I bought was actually rather than NO\footnote{Normally Open and Normally Closed Switches: \url{https://learn.sparkfun.com/tutorials/switch-basics}}. I had to superglue the switch onto the case. I was able to insert it as a press-fit component, but it needed glue to stay in place when the button was depressed. 
+Unfortunately, although I bought two switches, I didn't realize that one of the switches I bought was actually NC rather than NO\footnote{Normally Open and Normally Closed Switches: \url{https://learn.sparkfun.com/tutorials/switch-basics}}. I had to superglue the switch onto the case. I was able to insert it as a press-fit component, but it needed glue to stay in place when the button was depressed. 
 
 \section{Assembly}
 The two halves are currently held together by 4 twist-ties. The ATX power adapter cage is held on by clips and hot glue.
@@ -123,8 +123,5 @@ The two halves are currently held together by 4 twist-ties. The ATX power adapte
 
 \section{Results}
 The machine is currently running Windows 10. The box can run and stream games at > 30fps at medium-high settings. I was running Arch Linux on it at first. I had to update to the latest BIOS and kernel to get it running, but it was very impressive. Since my main machine is a Linux workstation, I decided to risk purchasing a copy of Windows 10 Pro from Kinguin.net It was pretty cheap, but since it was an OEM license and I am not entirely familiar with the Windows install experience, it took me a few days to get the license properly validated. I haven't yet done formal benchmarks, but the first few weeks, I ran the DDR4 at the default 2133 Mhz. I brought the RAM up to 3200Mhz without looking at the rated speed and it just worked. I'm getting some crashes which might be due to the undersized PSU brick I'm currently using since it's only designed to supply 90W of power.
-
-\section{Code}
-\url{run:../mini_itx_ryzen.scad}
 
 \end{document}
